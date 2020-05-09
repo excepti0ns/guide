@@ -18,38 +18,45 @@ bot.on("ready",=> console.log(ready));
 bot.on("message",async message => {
 });
 ```
-Yeah ,it's done.So now we r using quick.db to store guild data (i.e guild YouTube channels and configuration).You can use any remote database.
-So firstly we will do a simple command `add` ,it will store the YouTube channel to track live streams ,So the example usage is `?add UCnxjyu999393ushszzh`.
-Here,we go
+Yeah ,it's done.Now create a `config.json` that holds all the credentials.
 ```js
-const db = require("quick.db");
-const prefix = "?";
+{
+TOKEN: "Your BOT Token",
+PREFIX:"?",
+channels:[],
+interval:60000
+}
+```
+Here channels is the YouTube channels id that u wish to get notified when they goes live, multiple channel id's are supported.Ex: `["UChdjiio3iriuez","Uchshzezez6589"]`.And the interval is in terms of ms.
+
+So now our code looks like below.
+```js
+const {Client,MessageEmbed} = require("discord.js");
+const bot = new Client();
+const config = require ("./config.json");
+
+bot.login(config.TOKEN);
+bot.on("ready",=> console.log("Ready"));
 bot.on("message",async message => {
 if(message.author.bot || message.author.id == bot.user.id || message.channel.type == "dm") return;
-if(!message.content.startsWith(prefix)) return;
-    let args = message.content.slice(prefix.length).trim().split(/ +/g);
+if(!message.content.startsWith(config.PREFIX)) return;
+    let args = message.content.slice(config.PREFIX.length).trim().split(/ +/g);
     let command = args.shift().toLowerCase();
 
-if(command == "add") {
-if(!args[0]) return message.channel.send("Please provide a YouTube channel id");
-const res = await fetch(`https://www.youtube.com/channel/${args[0]}`);
-if(res.status > 210) return message.channel.send("You mispelled the channel id, check the id once again.");
-db.set(message.guild.id,[args[0]]);
-message.channel.send("Added YouTube channel to the list");
+if(command == "ping") {
+message.channel.send("Pong")
 };
 ```
-Next ,we r doing `remove` command ,it removes YouTube channel id from the database.
-Here I m not going to do the same stuff like ignoring bots ,prefix etc.
-```js
-if(command == "remove") {
-if(!args[0]) return message.channel.send("Please provide a channel id to remove");
-const list = db.fetch(message.guild.id);
-if(list && list.channels.includes(args[0])) {
-let newlist = list.channels.filter(id => id != args[0]);
-db.set(message.guild.id,{channels:newlist});
-message.channel.send("Removed channel from the list");
-} else {
-return message.channel.send("That channel doesn't exists in list");
-};
+So here we completed the bot stuff.Now we move to the youtube stuffs.Now create a `youtube.js` file.
+Then fill these codes.
+
+```js 
+const fetch = require("node-fetch");
+const cheerio = require("cheerio");
+let IP = [];
+let UserAgent = [];
+
+function random() {
+const ip = Math.floar(
 ```
-})
+
