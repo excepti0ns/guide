@@ -55,8 +55,24 @@ const fetch = require("node-fetch");
 const cheerio = require("cheerio");
 let IP = [];
 let UserAgent = [];
+module.exports = (client) => {
 
 function random() {
-const ip = Math.floar(
+const ip = IP[Math.floor(Math.random() * IP.length)];
+const useragent = UserAgent[Matt.floor(Math.random() * IP.length)];
+return {ip,useragent};
+};
+
+async function live(id) {
+const {ip,useragent} = random();
+let options = {UserAgent:useragent};
+if(ip) options.agent = new HttpProxy(ip);
+const res = await fetch(`https://www.youtube.com/channel/${id}`,options);
+const text = await res.text();
+const dom = cheerio.load(text);
+};
+
+};
+
 ```
 
