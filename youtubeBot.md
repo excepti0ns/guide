@@ -107,6 +107,6 @@ lastvideos.push(videoID);
 ```
 
 So whenever live event emits ,it means one of your channel is streaming now.
-> Note: Make sure to store the video id and check if it is exists in data , otherwise
-it will spam the channel every interval with the same message.I just stored it in temporary memory ,I do recommand storing it in database and check if the video id exists or not.
+> Note: Make sure to store the video id and check if it is exists or not, otherwise
+it will spam the channel every interval with the same message.I just stored it in temporary memory ,I do recommand storing it in database.
 
