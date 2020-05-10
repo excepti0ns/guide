@@ -53,6 +53,7 @@ Then fill these codes.
 ```js 
 const fetch = require("node-fetch");
 const cheerio = require("cheerio");
+const HttpProxy = require("http-proxy-agent");
 const config = require ("./config.json");
 let IP = [];
 let UserAgent = [];
@@ -61,7 +62,7 @@ module.exports = (bot) => {
 
 function random() {
 const ip = IP[Math.floor(Math.random() * IP.length)];
-const useragent = UserAgent[Matt.floor(Math.random() * IP.length)];
+const useragent = UserAgent[Math.floor(Math.random() * IP.length)];
 return {ip,useragent};
 };
 
@@ -111,6 +112,6 @@ lastvideos.push(videoID);
 ```
 
 So whenever live event emits ,it means one of your channel is streaming now.
-> Note: Make sure to store the video id and check if it is exists or not, otherwise
+> Warning:Make sure to store the video id and check if it is exists or not, otherwise
 it will spam the channel every interval with the same message.I just stored it in temporary memory ,I do recommand storing it in database.
 
