@@ -53,6 +53,7 @@ Then fill these codes.
 ```js 
 const fetch = require("node-fetch");
 const cheerio = require("cheerio");
+const config = require ("./config.json");
 let IP = [];
 let UserAgent = [];
 module.exports = (client) => {
@@ -70,8 +71,16 @@ if(ip) options.agent = new HttpProxy(ip);
 const res = await fetch(`https://www.youtube.com/channel/${id}`,options);
 const text = await res.text();
 const dom = cheerio.load(text);
+
+const text = dom(".yt-lockup-content").find(".yt-badge-live").text().toLowerCase();
+if(!text.includes("live") return;
+const videoID = dom(.yt-lockup-content").find(".spf-link").attr("href").split("=")[1];
+if(!videoID) return;
+return videoID;
 };
 
+setInterval(() => {
+},config.interval);
 };
 
 ```
