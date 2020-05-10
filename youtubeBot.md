@@ -101,7 +101,7 @@ let lastvidoes = [];
 bot.on("live",videoID => {
 if(lastvidoes.includes(videoID)) return;
 // Do whatever u want.
-bot.channels.cach.get("channel id").send(`@eveyone https://www.youtube.com/vidoes?v=${videoID}`);
+bot.channels.cach.get("channel id").send(`@eveyone https://www.youtube.com/watch?v=${videoID}`);
 lastvideos.push(videoID);
 });
 ```
