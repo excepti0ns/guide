@@ -42,6 +42,51 @@ Now create a `youtube.js` file ,then follow these codes.
 
 ```js 
 
+const fetch = require("node-fetch");
+const cheerio = require("cheerio");
+const HttpProxy = require("http-proxy-agent");
+const config = require ("./config.json");
+let IP = [];
+let UserAgent = [];
+
+module.exports = (bot) => {
+
+function random() {
+const ip = IP[Math.floor(Math.random() * IP.length)];
+const useragent = UserAgent[Math.floor(Math.random() * IP.length)];
+return {ip,useragent};
+};
+
+async function live(id) {
+try {
+  
+const { ip , useragent } = random();
+let options = {headers:{"User-Agent":useragent,"referer":"https://www.google.com"}};
+if(ip) options.agent = new HttpProxy(ip);
+const res = await fetch(`https://www.youtube.com/channel/${id}`,options);
+const text = await res.text();
+const dom = cheerio.load(text);
+
+const test = dom(".yt-lockup-content").find(".yt-badge-live").text().toLowerCase();
+if(! test.includes("live"))return;
+const videoID = dom(".yt-lockup-content").find(".spf-link").attr("href").split("=")[1];
+if(!videoID) return; 
+bot.emit("live",videoID);
+} catch(r) {
+console.log(r);
+
+};
+};
+
+setInterval(() => {
+
+for (const id of config.channels) {
+   live(id);
+};
+  
+},config.interval);
+};
+
 
 ```
 - Youtube may block you ,if u scrap the web constantly,so we have a setup to prevent it ,that's is nothing but this `random` function,it supppies random ip ,so that they cannot know we r scraping their web . So fill some user agents and working IPS in the respective array ,you can find it out [here](https://deviceatlas.com/blog/list-of-user-agent-strings#desktop) and [here](https://free-proxy-list.net/). Note ip should be in this format `https://<ip>:<port>`,for example `https://90.587.34.62:8080`.
@@ -52,13 +97,13 @@ Now create a `youtube.js` file ,then follow these codes.
 
 Now in our main file just listen for the `live` event.
 ```js
-require ("./youtube.js")(bot);
-let lastvidoes = [];
+
+let last = []
 bot.on("live",videoID => {
-if(lastvidoes.includes(videoID)) return;
+if(last.includes(videoID)) return;
 // Do whatever u want.
-bot.channels.cache.get("channel id").send(`@eveyone https://www.youtube.com/watch?v=${videoID}`);
-lastvideos.push(videoID);
+bot.channels.cache.get(config.channelID).send(`@eveyone https://www.youtube.com/watch?v=${videoID}`);
+last.push(videoID);
 });
 ```
 
