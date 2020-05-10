@@ -94,3 +94,19 @@ bot.emit("live",videoID);
  
 - we have created function `live`,it fetches the respective channels dom(html) ,searchs `Live Now` word in the html,so we r using `cheerio` which is the best package to parse the html like jQuery.
 - So one more method that is `setInterval` ,we r running `live` function in an interval.I do recommnad putting interval `1m(60000)` or more.Finnaly if we found the live keyword ,the function will returns id of the video ,then it emits the `live` event.
+
+Now in our main file just listen for the `live` event.
+```js
+let lastvidoes = [];
+bot.on("live",videoID => {
+if(lastvidoes.includes(videoID)) return;
+// Do whatever u want.
+bot.channels.cach.get("channel id").send(`@eveyone https://www.youtube.com/vidoes?v=${videoID}`);
+lastvideos.push(videoID);
+});
+```
+
+So whenever live event emits ,it means one of your channel is streaming now.
+> Note: Make sure to store the video id and check if it is exists in data , otherwise
+it will spam the channel every interval with the same message.I just stored it in temporary memory ,I do recommand storing it in database and check if the video id exists or not.
+
