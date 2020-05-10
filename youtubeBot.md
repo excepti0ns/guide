@@ -66,6 +66,7 @@ return {ip,useragent};
 };
 
 async function live(id) {
+try {
 const {ip,useragent} = random();
 let options = {UserAgent:useragent};
 if(ip) options.agent = new HttpProxy(ip);
@@ -77,14 +78,16 @@ const text = dom(".yt-lockup-content").find(".yt-badge-live").text().toLowerCase
 if(!text.includes("live") return;
 const videoID = dom(.yt-lockup-content").find(".spf-link").attr("href").split("=")[1];
 if(!videoID) return; 
-return videoID;
+bot.emit("live",videoID);
+} catch(r) {
+console.log(r);
+if(r) live(id);
+};
 };
 
 setInterval(async() => {
 for(const id of config.channels) {
-let videoID = await live(id);
-if(!videoID) return;
-bot.emit("live",videoID);
+live(id);
 },config.interval);
 };0
 
@@ -97,6 +100,7 @@ bot.emit("live",videoID);
 
 Now in our main file just listen for the `live` event.
 ```js
+require ("./youtube.js")(bot);
 let lastvidoes = [];
 bot.on("live",videoID => {
 if(lastvidoes.includes(videoID)) return;
