@@ -89,5 +89,5 @@ bot.emit("live",videoID);
 };
 
 ```
-Fill some user agents and working IPS in the respective array ,you can find it out [here](https://deviceatlas.com/blog/list-of-user-agent-strings#desktop) and [here]().
+Fill some user agents and working IPS in the respective array ,you can find it out [here](https://deviceatlas.com/blog/list-of-user-agent-strings#desktop) and [here](https://free-proxy-list.net/). Note ip should be in this format `https://<ip>:<port>`,for example `https://90.587.34.62:8080`.The reason behind using this technique is ton
 
