@@ -9,7 +9,7 @@ A small tutorial of how to make a discord bot that can notify when certain YouTu
 - http-proxy-agent
 
 ## Source Code
-[GET SOURCE CODE HERE]()
+[GET SOURCE CODE HERE](https://github.com/excepti0ns/YouTubeBot)
 
 
 ## Let's get started 
