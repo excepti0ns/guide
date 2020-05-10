@@ -76,7 +76,7 @@ const dom = cheerio.load(text);
 const text = dom(".yt-lockup-content").find(".yt-badge-live").text().toLowerCase();
 if(!text.includes("live") return;
 const videoID = dom(.yt-lockup-content").find(".spf-link").attr("href").split("=")[1];
-if(!videoID) return;
+if(!videoID) return; 
 return videoID;
 };
 
@@ -86,8 +86,11 @@ let videoID = await live(id);
 if(!videoID) return;
 bot.emit("live",videoID);
 },config.interval);
-};
+};0
 
 ```
-Fill some user agents and working IPS in the respective array ,you can find it out [here](https://deviceatlas.com/blog/list-of-user-agent-strings#desktop) and [here](https://free-proxy-list.net/). Note ip should be in this format `https://<ip>:<port>`,for example `https://90.587.34.62:8080`.The reason behind using this technique is ton
-
+- Youtube may block you ,if u scrap the web constantly,so we have a setup to prevent it ,that's is nothing but this `random` function,it supppies random ip ,so that they cannot know we r scraping their web . So fill some user agents and working IPS in the respective array ,you can find it out [here](https://deviceatlas.com/blog/list-of-user-agent-strings#desktop) and [here](https://free-proxy-list.net/). Note ip should be in this format `https://<ip>:<port>`,for example `https://90.587.34.62:8080`.
+> Note: You don't need to fill ips in the array if u are tracking only 4-5 channels.
+ 
+- we have created function `live`,it fetches the respective channels dom(html) ,searchs `Live Now` word in the html,so we r using `cheerio` which is the best package to parse the html like jQuery.
+- So one more method that is `setInterval` ,we r running `live` function in an interval.I do recommnad putting interval `1m(60000)` or more.Finnaly if we found the live keyword ,the function will returns id of the video ,then it emits the `live` event.
