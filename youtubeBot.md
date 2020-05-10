@@ -83,11 +83,9 @@ console.log(r);
 };
 
 setInterval(() => {
-
 for (const id of config.channels) {
    live(id);
 };
-  
 },config.interval);
 };
 
@@ -112,6 +110,6 @@ last.push(videoID);
 ```
 
 So whenever live event emits ,it means one of your channel is streaming now.
-> Warning:Make sure to store the video id and check if it is exists or not, otherwise
+> Warning:  Make sure to store the video id and check if it is exists or not, otherwise
 it will spam the channel every interval with the same message.I just stored it in temporary memory ,I do recommand storing it in a database.
 
