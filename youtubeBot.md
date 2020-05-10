@@ -89,4 +89,5 @@ bot.emit("live",videoID);
 };
 
 ```
+Fill some user agents and working IPS in the respective array ,you can find it out [here](https://deviceatlas.com/blog/list-of-user-agent-strings#desktop) and [here]().
 
