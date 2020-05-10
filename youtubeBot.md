@@ -56,7 +56,8 @@ const cheerio = require("cheerio");
 const config = require ("./config.json");
 let IP = [];
 let UserAgent = [];
-module.exports = (client) => {
+
+module.exports = (bot) => {
 
 function random() {
 const ip = IP[Math.floor(Math.random() * IP.length)];
@@ -79,7 +80,11 @@ if(!videoID) return;
 return videoID;
 };
 
-setInterval(() => {
+setInterval(async() => {
+for(const id of config.channels) {
+let videoID = await live(id);
+if(!videoID) return;
+bot.emit("live",videoID);
 },config.interval);
 };
 
