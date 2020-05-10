@@ -22,8 +22,8 @@ Yeah ,it's done.Now create a `config.json` that holds all the credentials.
 {
 "Token": "Your BOT Token",
 "channelID":"Discord channel id",
-channels:[],
-interval:60000
+"channels":[],
+"interval":60000
 }
 ```
 Here channels is the YouTube channels id that u wish to get notified when they goes live, multiple channel id's are supported.Ex: `["UChdjiio3iriuez","Uchshzezez6589"]`.And `channelID` is the discord channel id where u want to send message.
